@@ -1,0 +1,133 @@
+ -- comentario
+  -- A linha a baixo cria um banco de dados
+  create database dbinfox;
+  
+  -- linha a baixo seleciona o banco de dados 
+  
+  use dbinfox;
+  
+  -- O comando a baixo cria uma tabela
+  
+  create table tbusuarios(
+  iduser int primary key, -- chave primaria 
+  usuario varchar(50) not null, -- 50 limite de caracteres
+  fone varchar(15) not null,
+  login varchar(15) not null unique, -- unique campo unico nao tem outro com mesmo nome 
+  senha varchar(15) not null
+  
+  );
+  
+  -- comando que descreve a tabela 
+  
+  describe tbusuarios;
+  
+  -- inserindo dados na tabela ( CRUD)
+  -- create = insert 
+  
+  insert into tbusuarios(iduser, usuario, fone, login, senha)
+  values(1,'Joao pedro','19182182828','jPedro','welder');
+  
+  -- linha exibe dados da tabela (CRud)
+  -- read - select
+  select * from tbusuarios;
+  
+  -- mais usuarios
+  
+ insert into tbusuarios(iduser, usuario, fone, login, senha)
+  values(2,'welder','19182182828','jwelder','welder');
+  insert into tbusuarios(iduser, usuario, fone, login, senha)
+  values(3,'tiao','19182182828','jtiao','welder');
+  insert into tbusuarios(iduser, usuario, fone, login, senha)
+  values(4,'ana','19182182828','jana','welder');
+  
+  
+  -- revendo dados
+  
+  select * from tbusuarios;
+  
+  -- fazendo um update
+  
+  update tbusuarios set fone= '97515398' where iduser=2;
+  -- atualiza tabela usuarios campo telefone onde o usuario tem o id =2
+  
+  
+  -- Delete onde vai apagar um registro da tabela (CRud)
+  
+  delete from tbusuarios where iduser=3;
+  
+  
+  
+  -- criando a tabela de criação de clientes
+  create table tbclientes(
+  idcli int primary key auto_increment,
+  nomecli varchar(50) not null,
+  endcli varchar (100),
+  fonecli varchar (40) not null,
+  emalcli varchar (50) 
+  );
+  
+  -- selecionar a tabela para ver se foi criada
+  
+  describe tbclientes;
+  
+  -- insert 
+  insert into tbclientes(nomecli, endcli, fonecli, emalcli)
+  values ('linux','rua abreu braga, 1564','134245455','wel@123.com');
+  
+  
+  select * from tbclientes;
+  
+  
+  -- criando tabela ordem de serviços
+  
+  create table tbos(
+  os int primary key auto_increment,
+  data_os timestamp default current_timestamp, -- esta linha automaticamente puxa hora do servidor na criação 
+  equipamento varchar(150) not null,
+  defeito varchar (150) not null,
+  servico varchar (150),
+  tecnico varchar (30), 
+  valor  decimal (10,2), -- 10 digitos com apenas duas casas decimais depois da virgula
+  idcli int not null, -- chave estrangeira 
+  foreign key(idcli) references tbclientes(idcli) -- campo responsavel por unir as duas tabelas
+  
+  );
+  
+  
+  describe tbos;
+  
+  
+  insert into tbos(equipamento,defeito,servico,tecnico,valor,idcli)
+  values('notebook','nao liga','jobstech','jobs',160.35,1);
+  
+  select * from tbos;
+  
+  
+  -- codigo tras informações  de duas tabelas
+  
+  select 
+  O.os,equipamento,defeito, servico,valor,  -- O criado para variavel da tabela os
+  C.nomecli,fonecli
+  from tbos as O
+  inner join tbclientes as C
+  on(O.idcli =  C.idcli);
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
